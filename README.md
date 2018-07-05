@@ -17,7 +17,7 @@ An AppVeyor CI/CD Framework for build, test and deploy of Docker container image
 
 | AppVeyor Status | Code Factor Status |
 | - | - |
-| [![Build status](https://ci.appveyor.com/api/projects/status/qm2ivso20c7fup2u/branch/master?svg=true)](https://ci.appveyor.com/project/kiazhi/AppVeyor-CI-CD-for-Docker/branch/master) | [![CodeFactor](https://www.codefactor.io/repository/github/kiazhi/AppVeyor-CI-CD-for-Docker/badge)](https://www.codefactor.io/repository/github/kiazhi/AppVeyor-CI-CD-for-Docker) |
+| [![Build status](https://ci.appveyor.com/api/projects/status/n9ce2e990pmi2wdy/branch/master?svg=true)](https://ci.appveyor.com/project/kiazhi/appveyor-ci-cd-for-docker/branch/master) | [![CodeFactor](https://www.codefactor.io/repository/github/kiazhi/AppVeyor-CI-CD-for-Docker/badge)](https://www.codefactor.io/repository/github/kiazhi/AppVeyor-CI-CD-for-Docker) |
 
 ## Get AppVeyor-CI-CD-for-Docker
 
