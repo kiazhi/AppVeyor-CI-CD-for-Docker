@@ -25,8 +25,8 @@ You can implement this `kiazhi/AppVeyor-CI-CD-for-Docker` framework by:
 
 - Fork from the repository for use
     > If you fork the repository, you need to do the following:
-    > - Delete `README.md` file
-    > - Delete `./docs` and `./assets` folders and their content
+    > - Delete `README.md`, `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` files
+    > - Delete `./.github`, `./docs` and `./assets` folders and their content
     > - Delete any folders and files within `./dockerfiles` folder (Those
     content exists in the repository for test purposes. Of course, you can
     definitely feel free to keep them as examples or demo.)
