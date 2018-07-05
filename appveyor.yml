@@ -1,0 +1,138 @@
+#####################
+# Filename:
+#   appveyor.yml
+#
+# Description:
+#   An AppVeyor configuration YAML file that configure the AppVeyor CI/CD for
+#   Docker framework to manage the CI/CD workflow to execute the build_script,
+#   test_script and deploy_script PowerShell scripts.
+#
+# Project Site:
+#   https://github.com/kiazhi/AppVeyor-CI-CD-for-Docker
+#
+# Version:
+#   1.0.0
+#
+# Author:
+#   Ryen Kia Zhi Tang
+#
+# Creation Date:
+#   29/06/2018
+#
+#####################
+
+# version format
+version: 1.0.{build}
+
+# branches to build
+branches:
+
+  # whitelist branches
+  only:
+    - master
+
+  #blacklist branches
+  except:
+    - gh-pages
+
+# Do not build on tags (GitHub and BitBucket)
+skip_tags: true
+
+# build worker image (VM template)
+image: Visual Studio 2017
+
+# initialize scripts/commands before repository is cloned
+init:
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Name") -InformationAction 'Continue' ; [Environment]::MachineName
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Operating System Version") -InformationAction 'Continue' ; [Environment]::OSVersion
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host .NET Framework Version") -InformationAction 'Continue' ; [Environment]::Version
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host PowerShell Version") -InformationAction 'Continue' ; $PSVersionTable
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Docker Version") -InformationAction 'Continue' ; docker version
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Containers") -InformationAction 'Continue' ; docker container ls -a
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Images") -InformationAction 'Continue' ; docker images
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Work Directory") -InformationAction 'Continue' ; Get-Location
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] Get AppVeyor Host Work Directory Items") -InformationAction 'Continue' ; Get-ChildItem -Path . -Recurse ; if((Get-ChildItem -Path . -Recurse | Measure-Object).Count -eq 0){ Write-Information -MessageData ('INFO:'+' AppVeyor Host Work Directory has no items') -InformationAction 'Continue'}
+
+# environment variables
+environment:
+  # 1. Specify your Docker Username and Password from:
+  #     AppVeyor Settings > Environment > Environment variables
+  # 2. Toggle variable encryption to ensure your input value is not in
+  #     plain-text.
+  # 3. Select Export YAML and copy the secure string value to this YAML file
+  #     environment field below.
+  DOCKER_USERNAME: yo6WUWDE8AzFvRi3t+mzEg==
+  DOCKER_PASSWORD: r66YHueiT2/VcTt92zMvuQ==
+
+# initialize scripts/commands after repository is cloned
+install:
+  - pwsh: Write-Information -MessageData ('INFO:'+" [$(Get-Date -UFormat '%Y-%m-%d_%H:%M:%S').$((Get-Date).Millisecond) $((Get-TimeZone).DisplayName)] List All Files on AppVeyor Host") -InformationAction 'Continue' ; Get-ChildItem -Path . -Recurse | Select FullName, Mode, CreationTimeUtc, LastAccessTimeUtc, LastWriteTimeUtc, Length
+
+# build scripts/commands after install
+build_script:
+  - pwsh: .\.appveyor\scripts\powershell\Build-DockerImage.ps1
+
+# test scripts/commands after build
+test_script:
+  - pwsh: .\.appveyor\scripts\powershell\Test-DockerImage.ps1
+  - pwsh: .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1
+
+# deploy scripts/commands after test
+deploy_script:
+#  - pwsh: .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1
+
+###############################################
+# NOTE:
+#   Anything below this line is not part of AppVeyor-CI-CD-Docker framework
+#   scaffold. All configuration below this line is for GitHub releases of
+#   the AppVeyor-CI-CD-Docker framework zip file.
+###############################################
+
+after_test:
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-nodejs-nanoserver-container
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-nodejs-nanoserver-container:10.3.0
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-nodejs-nanoserver-container.8.11.2
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-python-nanoserver-container
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-python-nanoserver-container:3.6.5
+  - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-python-nanoserver-container.3.5.4
+  - pwsh: New-Item -Path .\.stage\appveyor.yml -ItemType File -Force
+  - pwsh: (Get-Content -Path .\appveyor.yml | Select-Object -First 82) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\.stage\appveyor.yml).Replace('yo6WUWDE8AzFvRi3t+mzEg==',(-join ((65..90) + (97..122) | Get-Random -Count 24 | ForEach-Object { ([char] $_) }))) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\.stage\appveyor.yml).Replace('r66YHueiT2/VcTt92zMvuQ==',(-join ((65..90) + (97..122) | Get-Random -Count 24 | ForEach-Object { ([char] $_) }))) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\.stage\appveyor.yml | Where-Object { $_ -notcontains '  - pwsh:'+' .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1' }) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\.stage\appveyor.yml).Replace(('#  - pwsh:'+' .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1'),('  - pwsh:'+' .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1')) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: Copy-Item -Path .\.appveyor\ -Destination .\.stage\ -Recurse
+  - pwsh: 7z a -tzip .\.build\AppVeyor-CI-CD-for-Docker-v$ENV:APPVEYOR_BUILD_VERSION.zip .\.stage\.appveyor\
+  - pwsh: 7z a -tzip .\.build\AppVeyor-CI-CD-for-Docker-v$ENV:APPVEYOR_BUILD_VERSION.zip .\.stage\appveyor.yml
+
+# artifacts configuration
+artifacts:
+
+  # pushing zipped file
+  - path: '.\.build\AppVeyor-CI-CD-for-Docker-v*.zip'
+    name: AppVeyor-CI-CD-for-Docker-v$ENV:APPVEYOR_BUILD_VERSION
+
+# deployment configuration
+deploy:
+
+  # deploy to GitHub releases based on APPVEYOR_REPO_TAG
+  - provider: GitHub
+    name: GitHub releases
+    release: v$(APPVEYOR_BUILD_VERSION)
+    description: Check the release notes for changes.
+    auth_token:
+      secure: 2fYUA7AIbmF+QTUyliStvfglDtJpsrybNHg8yWGv9IrHsPH0ryVJMmtdDNVsVceQ
+    artifact: /.*\.zip/
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+      branch: master
+
+# notifications configuration
+notifications:
+
+  - provider: GitHubPullRequest
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
