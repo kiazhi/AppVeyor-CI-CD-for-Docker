@@ -2,13 +2,16 @@
 
 # AppVeyor-CI-CD-for-Docker
 
-[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/kiazhi/Windows-Containers.svg)](https://github.com/kiazhi/AppVeyor-CI-CD-for-Docker/commits/master)
+[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/kiazhi/AppVeyor-CI-CD-for-Docker.svg)](https://github.com/kiazhi/AppVeyor-CI-CD-for-Docker/commits/master)
 ![GitHub commit activity the past week, 4 weeks, year](https://img.shields.io/github/commit-activity/y/kiazhi/AppVeyor-CI-CD-for-Docker.svg)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/kiazhi/AppVeyor-CI-CD-for-Docker.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/kiazhi/AppVeyor-CI-CD-for-Docker.svg)
 [![license](https://img.shields.io/github/license/kiazhi/AppVeyor-CI-CD-for-Docker.svg)](\LICENSE)
 
 An AppVeyor CI/CD Framework for build, test and deploy of Docker container images.
+
+![GitHub language count](https://img.shields.io/github/languages/count/kiazhi/AppVeyor-CI-CD-for-Docker.svg)
+![GitHub top language](https://img.shields.io/github/languages/top/kiazhi/AppVeyor-CI-CD-for-Docker.svg)
 
 ## Build status on master branch
 
@@ -23,6 +26,7 @@ You can download it from the [releases](https://github.com/kiazhi/AppVeyor-CI-CD
 ## How to use it?
 
 You can check the [documentation](/docs) folder on [Getting Started with AppVeyor CI/CD for Docker](/docs/getting-started-with-appveyor-ci-cd-for-docker.md)
+
 ## Download the Source Code
 
 You can clone the source code using `Git` as below:
@@ -30,6 +34,14 @@ You can clone the source code using `Git` as below:
 ```sh
 git clone https://github.com/kiazhi/AppVeyor-CI-CD-for-Docker.git
 ```
+
+## Developing and Contributing
+
+Please see the [Contributing](/CONTRIBUTING.md) guide for how to develop and contribute.
+
+## Code of Conduct
+
+Please view the [Code of Conduct](/CODE_OF_CONDUCT.md) page.
 
 ## Legal and Licensing
 
