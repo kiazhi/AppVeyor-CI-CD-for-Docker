@@ -30,6 +30,7 @@ branches:
   # whitelist branches
   only:
     - master
+    - source
 
   #blacklist branches
   except:
@@ -96,7 +97,8 @@ after_test:
   - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-python-nanoserver-container:3.6.5
   - pwsh: docker pull kiazhi/appveyor-ci-cd-for-docker-test-python-nanoserver-container.3.5.4
   - pwsh: New-Item -Path .\.stage\appveyor.yml -ItemType File -Force
-  - pwsh: (Get-Content -Path .\appveyor.yml | Select-Object -First 82) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\appveyor.yml | Select-Object -First 83) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
+  - pwsh: (Get-Content -Path .\.stage\appveyor.yml | Where-Object { $_ -notcontains '    - source' }) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
   - pwsh: (Get-Content -Path .\.stage\appveyor.yml).Replace('yo6WUWDE8AzFvRi3t+mzEg==',(-join ((65..90) + (97..122) | Get-Random -Count 24 | ForEach-Object { ([char] $_) }))) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
   - pwsh: (Get-Content -Path .\.stage\appveyor.yml).Replace('r66YHueiT2/VcTt92zMvuQ==',(-join ((65..90) + (97..122) | Get-Random -Count 24 | ForEach-Object { ([char] $_) }))) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
   - pwsh: (Get-Content -Path .\.stage\appveyor.yml | Where-Object { $_ -notcontains '  - pwsh:'+' .\.appveyor\scripts\powershell\Deploy-DockerImage.ps1' }) | Set-Content -Path .\.stage\appveyor.yml -Encoding UTF8 -Force ;
