@@ -21,7 +21,7 @@ Repository/Container image pushed to Docker Repository.
 
 .NOTES
 
-    Version       : 1.0
+    Version       : 1.0.0
     Author        : Ryen Kia Zhi Tang
     Creation Date : 29/06/2018
     Purpose/Change: Intended as AppVeyor deploy_script for container image development
